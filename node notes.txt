@@ -1,0 +1,111 @@
+REPL - read eval print loop
+CLI - command line interface (mostly used)
+
+we can drag and drop file/folder to cli to copy path
+
+1) global variables
+GLOBALS- no window
+__dirname- path to current directory
+__filename- filename
+require- function to use modules (commonJS)
+module- info about current module (file)
+process-info about env where the programis beign executed
+
+
+2) modules (import and export vali chij)
+
+// modules- encapsulated code (only share minimum)
+//nodejs uses commonJS under the hood, in commonJS every file is module by default
+
+module.exports = {}		// to export
+const x= require('<file path here>')		// to import
+
+another way- 
+module.exports.items= ['item1','item2'];
+module.exports.singlePerson= person		//alag naam ke saath
+
+3) require without modules.export
+We almost always see require() being used with module.exports, but you don't have to. When you don't export anything, the code in the imported module will still run, but you can't bind the import to a variable and interact with it.
+
+4) built in modules
+OS
+Path
+FS	(file system)
+HTTP
+
+internal modules need not be installed while external modules must be installed.
+
+since there modules have methods in them we use ()		{exception path.sep which returns \}
+
+5) path module-
+path.join mai ".." ko pass karne pe it goes to the parent directory.
+
+path.join vs path.resolve ----->
+the two functions deal with segments starting with / in very different ways; join will just concatenate it with the previous argument, however resolve will treat this as the root directory, and ignore all previous paths - think of it as the result of executing cd with each argument:
+path.join('/a', '/b') // Outputs '/a/b'
+path.resolve('/a', '/b') // Outputs '/b'
+
+absolute path vs relative path,,,, delimiters (./ , .. , /)
+
+6) fs module- file system,,,, it is of 2 types, sync and async
+
+const {readFileSync, writeFileSync} = require('fs')
+callback is executed once the functionality we wanted to execute is completed
+
+If you're confused on the event loop, a call back function will ran last because it is a message event. All functions in your program  have to complete before the callback function will run your code. 
+
+So Ex:
+Console. log('One')
+
+setTimeout(()=>{
+console.log('two')         Callback gets stored into quene until everything finishes running. 
+},0)
+
+console.log('three')
+
+It prints out 
+One
+three
+two
+
+and not One, Two, Three.
+
+This is useful because it can run everything while it's getting data from somewhere else, maybe reading a file. If we do it synchronously and we have something that takes a while to load, then everything else will stop and wait for it to get the data back. 
+
+Sync(blocking) vs Async(non blocking)
+
+
+in async it basically offloads the task (callback thing) and continues with the rest of the code
+alternative to async is promises or async await
+
+
+7) http module-
+we will use an abstractionon top of the http module that is express.js
+
+httmp.createServer((req,res)=>{}) creates a server,, takes a callback fn as a parameter whci in turn has two parameters conventionally named req, res........... here req and res are objects
+server.listen(5000)   -> it means server will listen to port 5000
+
+web browser pe jake url mai localhost:5000 type kia toh res.write display hua. op op 
+
+npm allows us to do 3 things-
+a.)use our own code in other projects
+b.)use code written by other developers
+c.)share our own solutions with other developers as well
+
+NPM-
+* npm calls the reusable code a package and a package is essentially a folder that contains a javascript code. modules and dependencies package are used interchangeably i.e. shareable js code
+
+package can be installed in 2 ways-
+local- i.e use in that particular project
+global- use in any project
+
+package.json - manifest file(stores important info about package/project)
+3 approaches to setup json file-
+a) manual approach (create package.json in the root, create properties etc)
+b) npm init (step by step, press enter to skip)
+c) npm init -y (everythin default)
+
+a new folder by the name node modules will be created where dependencies will be stored.
+There maybe packages that use other dependencies..... eg installing bootstrap also installs jquery since bs uses jq and popper.js
+
+we'll place the node modules in gitignore file
